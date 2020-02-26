@@ -1,15 +1,18 @@
-import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Nav, Navbar, NavDropdown, Button, Form } from "react-bootstrap";
 
 function Menubar() {
+  const [isLogin, setIsLogin] = useState(true);
+
   return (
     <Navbar bg="light" expand="lg" fixed="top">
-      <Navbar.Brand href="#home">Pentas Blog</Navbar.Brand>
+      <Link to="/">
+        <Navbar.Brand>Pentas Blog</Navbar.Brand>
+      </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          {/* <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link> */}
           <NavDropdown title="Category" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Menu1</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Menu2</NavDropdown.Item>
@@ -18,6 +21,11 @@ function Menubar() {
             <NavDropdown.Item href="#action/3.4">Menu4</NavDropdown.Item>
           </NavDropdown>
         </Nav>
+        <Form inline>
+          <Link to="/login">
+            <Button variant="secondary">{isLogin ? "Logout" : "Login"}</Button>
+          </Link>
+        </Form>
       </Navbar.Collapse>
     </Navbar>
   );
