@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Menubar from "./components/Menubar";
+import PostList from "./components/PostList";
 import Post from "./components/Post";
 import LoginForm from "./components/LoginForm";
 
@@ -15,10 +16,13 @@ function App() {
             <Menubar />
             <Switch>
               <Route exact path="/">
-                <Post />
+                <PostList />
               </Route>
               <Route path="/login">
                 <LoginForm />
+              </Route>
+              <Route path="/post/:postId">
+                <Post />
               </Route>
             </Switch>
           </Col>

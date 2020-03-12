@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules/index";
 import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown, Button, Form } from "react-bootstrap";
 
 function Menubar() {
-  const [isLogin, setIsLogin] = useState(true);
+  const isLogin = useSelector((state: RootState) => state.session.authenticated);
+  let category: Array<string> = ["menu1", "menu2", "menu3"];
 
   return (
     <Navbar bg="light" expand="lg" fixed="top">
@@ -13,13 +16,20 @@ function Menubar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <NavDropdown title="Category" id="basic-nav-dropdown">
+          {/* <NavDropdown title="Category" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Menu1</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Menu2</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.3">Menu3</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action/3.4">Menu4</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
+          {category.map(item => {
+            return (
+              <Nav.Link key={item} href={`/${item}`}>
+                {item}
+              </Nav.Link>
+            );
+          })}
         </Nav>
         <Form inline>
           <Link to="/login">

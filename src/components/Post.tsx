@@ -1,46 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../modules/index";
+import { Redirect, useParams } from "react-router-dom";
 import axios from "axios";
-
-interface post {
-  id: number;
-  title: string;
-  author: string;
-}
+import { Table } from "react-bootstrap";
+import { removeSession } from "../modules/session";
 
 function Post() {
-  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState({ title: "", content: "" });
+  const { postId } = useParams();
+  const session = useSelector((state: RootState) => state.session.session);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getPosts = async () => {
-      const postlist = await axios.get("http://localhost:8080/");
+    const getPost = async () => {
+      const result = await axios.get(`http://localhost:8080/post/${postId}`, { headers: session });
+      if (!result.data.authenticated) {
+        dispatch(removeSession());
 
-      setPosts(postlist.data);
+        alert(result.data.msg);
+        return <Redirect to="/login" />;
+      } else {
+        setPost(result.data.post);
+      }
     };
 
-    getPosts();
+    getPost();
   }, []);
 
   return (
     <Table responsive>
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Author</th>
-        </tr>
+        <th>{post.title}</th>
       </thead>
-      <tbody>
-        {posts.map((post: post) => {
-          return (
-            <tr>
-              <td>{post.id}</td>
-              <td>{post.title}</td>
-              <td>{post.author}</td>
-            </tr>
-          );
-        })}
-      </tbody>
+      <tr>
+        <td>{post.content}</td>
+      </tr>
     </Table>
   );
 }
