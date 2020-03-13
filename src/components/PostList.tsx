@@ -5,7 +5,7 @@ import { RootState } from "../modules/index";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import axios from "axios";
-import { removeSession } from "../modules/session";
+import { removeInfo } from "../modules/LoginInfo";
 
 interface post {
   id: number;
@@ -16,16 +16,16 @@ interface post {
 
 function PostList() {
   const [posts, setPosts] = useState([]);
-  const session = useSelector((state: RootState) => state.session);
+  const session = useSelector((state: RootState) => state.LoginInfo);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
     const getPosts = async () => {
       console.log(session);
-      const result = await axios.get("http://localhost:8080/", { headers: session });
+      const result = await axios.get("http://192.168.0.10:8080/");
       if (!result.data.authenticated) {
-        dispatch(removeSession());
+        dispatch(removeInfo());
 
         alert(result.data.msg);
         history.push("/login");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addSession } from "../modules/session";
+import { addInfo } from "../modules/LoginInfo";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
@@ -22,12 +22,12 @@ function LoginForm() {
 
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
-    const result = await axios.post("http://localhost:8080/login", { id: id, pw: pw });
+    const result = await axios.post("http://192.168.0.10:8080/login", { id: id, pw: pw });
     if (result.data.authenticated) {
-      dispatch(addSession(result.data.user, result.data.cookies));
+      dispatch(addInfo(result.data.user));
 
       alert("로그인 성공");
-      history.push("/");
+      history.goBack();
     } else {
       alert("로그인 실패");
     }

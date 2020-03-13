@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules/index";
 import { Link } from "react-router-dom";
-import { Nav, Navbar, NavDropdown, Button, Form } from "react-bootstrap";
+import { Nav, Navbar, Button, Form } from "react-bootstrap";
 
 function Menubar() {
-  const isLogin = useSelector((state: RootState) => state.session.authenticated);
+  const isLogin = useSelector((state: RootState) => state.LoginInfo.authenticated);
   let category: Array<string> = ["menu1", "menu2", "menu3"];
 
   return (
