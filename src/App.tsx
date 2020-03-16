@@ -5,6 +5,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Menubar from "./components/Menubar";
 import PostList from "./components/PostList";
 import Post from "./components/Post";
+import PostEditor from "./components/PostEditor";
 import LoginForm from "./components/LoginForm";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
               </Route>
               <Route path="/login">
                 <LoginForm />
+              </Route>
+              <Route path="/upload">
+                <PostEditor />
               </Route>
               <Route path="/post/:postId">
                 <Post />

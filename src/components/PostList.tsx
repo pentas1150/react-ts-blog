@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../modules/index";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 import { removeInfo } from "../modules/LoginInfo";
 
@@ -38,30 +38,35 @@ function PostList() {
   }, []);
 
   return (
-    <Table responsive>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {posts.map((post: post) => {
-          return (
-            <tr key={post.id}>
-              <td>{post.id}</td>
-              <td>
-                <Link to={`/post/${post.id}`}>{post.title}</Link>
-              </td>
-              <td>{post.author}</td>
-              <td>{post.createdAt}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+    <div>
+      <Table responsive>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map((post: post) => {
+            return (
+              <tr key={post.id}>
+                <td>{post.id}</td>
+                <td>
+                  <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </td>
+                <td>{post.author}</td>
+                <td>{post.createdAt}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <Button className="btn btn-light">
+        <Link to="/upload">Write</Link>
+      </Button>
+    </div>
   );
 }
 

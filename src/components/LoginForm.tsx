@@ -20,7 +20,7 @@ function LoginForm() {
     setPw(e.target.value);
   };
 
-  const onSubmitForm = async (e: any) => {
+  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await axios.post("http://192.168.0.10:8080/login", { id: id, pw: pw });
     if (result.data.authenticated) {
