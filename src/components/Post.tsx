@@ -5,11 +5,14 @@ import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
 import { removeInfo } from "../modules/LoginInfo";
 import renderHTML from "react-render-html";
+import Comment from "./Comment";
 
 function Post() {
   const [post, setPost] = useState({ id: 0, title: "", content: "", author: "", createdAt: "" });
   const [commentAuthor, setCommentAuthor] = useState("");
   const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState([]);
+
   const { postId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -41,8 +44,20 @@ function Post() {
         setPost(result.data.post);
       }
     };
+    const getComment = async () => {
+      const result = await axios.get(`http://192.168.0.10:8080/comment/${postId}`);
+      if (!result.data.authenticated) {
+        dispatch(removeInfo());
+
+        alert(result.data.msg);
+        return history.push("/login");
+      } else {
+        setCommentList(result.data.comment);
+      }
+    };
 
     getPost();
+    getComment();
   }, []);
 
   return (
@@ -54,7 +69,7 @@ function Post() {
       <hr />
       <div>{renderHTML(post.content)}</div>
       <hr />
-      <Card>
+      <Card className="my-4">
         <Card.Header>
           <h5>Leave a Comment</h5>
         </Card.Header>
@@ -74,6 +89,10 @@ function Post() {
           </Form>
         </Card.Body>
       </Card>
+
+      {commentList.map((item: { commenter: string; comment: string }) => {
+        return <Comment commenter={item.commenter} comment={item.comment} />;
+      })}
     </div>
   );
 }
