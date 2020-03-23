@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { addInfo } from "../modules/LoginInfo";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import "dotenv/config";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ function LoginForm() {
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await axios.post(`http://${process.env.DOMAIN}/login`, { id: id, pw: pw });
+    const result = await axios.post(`http://${process.env.REACT_APP_DOMAIN}/login`, { id: id, pw: pw });
     if (result.data.authenticated) {
       dispatch(addInfo(result.data.user));
 

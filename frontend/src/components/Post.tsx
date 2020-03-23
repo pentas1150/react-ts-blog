@@ -6,7 +6,6 @@ import { Card, Form, Button } from "react-bootstrap";
 import { removeInfo } from "../modules/LoginInfo";
 import renderHTML from "react-render-html";
 import Comment from "./Comment";
-import "dotenv/config";
 
 function Post() {
   const [post, setPost] = useState({ id: 0, title: "", content: "", author: "", createdAt: "" });
@@ -19,7 +18,7 @@ function Post() {
   const dispatch = useDispatch();
 
   const getPost = async () => {
-    const result = await axios.get(`http://${process.env.DOMAIN}/post/${postId}`);
+    const result = await axios.get(`http://${process.env.REACT_APP_DOMAIN}/post/${postId}`);
     if (!result.data.authenticated) {
       dispatch(removeInfo());
 
@@ -31,7 +30,7 @@ function Post() {
   };
 
   const getComment = async () => {
-    const result = await axios.get(`http://${process.env.DOMAIN}/comment/${postId}`);
+    const result = await axios.get(`http://${process.env.REACT_APP_DOMAIN}/comment/${postId}`);
     if (!result.data.authenticated) {
       dispatch(removeInfo());
 
@@ -51,7 +50,7 @@ function Post() {
   const onSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const result = await axios.post(`http://${process.env.DOMAIN}/comment/${postId}`, { comment: comment, commenter: commentAuthor });
+    const result = await axios.post(`http://${process.env.REACT_APP_DOMAIN}/comment/${postId}`, { comment: comment, commenter: commentAuthor });
     if (!result.data.authenticated) {
       dispatch(removeInfo());
 

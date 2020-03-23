@@ -4,10 +4,9 @@ import { RootState } from "../modules/index";
 import { useHistory } from "react-router-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
 import axios from "axios";
 import "./PostEditor.css";
-import "dotenv/config";
 
 function PostEditor() {
   const isLogin = useSelector((state: RootState) => state.LoginInfo.authenticated);
@@ -25,7 +24,7 @@ function PostEditor() {
   const onBtnClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    const result = await axios.post(`http://${process.env.DOMAIN}/upload`, { title: title, content: content });
+    const result = await axios.post(`http://${process.env.REACT_APP_DOMAIN}/upload`, { title: title, content: content });
 
     if (!result.data.authenticated) {
       alert("로그인 필요");
@@ -41,6 +40,19 @@ function PostEditor() {
 
   return (
     <div>
+      <h5>Category</h5>
+      <Form>
+        <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Label>Example select</Form.Label>
+          <Form.Control as="select">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </Form.Control>
+        </Form.Group>
+      </Form>
       <h5>Title</h5>
       <InputGroup className="mb-3">
         <FormControl aria-label="Default" aria-describedby="inputGroup-sizing-default" onChange={onTitleChange} value={title} />
