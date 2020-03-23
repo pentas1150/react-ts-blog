@@ -3,13 +3,10 @@ import { DataType } from "sequelize-typescript";
 import { Post } from "./Post";
 
 @Table
-export class User extends Model<User> {
+export class Category extends Model<Category> {
   @PrimaryKey
   @Column({ type: DataType.STRING })
-  userId: string;
-
-  @Column({ type: DataType.STRING })
-  userPw: string;
+  name: string;
 
   @HasMany(() => Post)
   posts: Post[];

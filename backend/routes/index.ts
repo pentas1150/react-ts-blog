@@ -5,11 +5,32 @@ import { isLoggedIn } from "./middlewares";
 const router = Router();
 import { User } from "../models/User";
 import { Post } from "../models/Post";
+import { Category } from "../models/Category";
 import { Comment } from "../models/Comment";
 import * as bcrypt from "bcryptjs";
 
 router.get("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const list = await Post.findAll();
+
+  res.json({ authenticated: true, postlist: list });
+});
+
+router.get("/category", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const list = await Category.findAll({ order: [["createdAt", "ASC"]], attributes: ["name"] });
+
+  res.json({ authenticated: true, category: list });
+});
+
+router.post("/category", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const list = await Category.create({
+    name: req.body.name
+  });
+
+  res.json({ authenticated: true, category: list });
+});
+
+router.get("/category/:name", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const list = await Post.findAll({ where: { category: req.params.name } });
 
   res.json({ authenticated: true, postlist: list });
 });
@@ -57,11 +78,12 @@ router.post("/login", (req: express.Request, res: express.Response, next: expres
 });
 
 router.post("/upload", isLoggedIn, async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  //list.push({ id: idx++, title: req.body.title, content: req.body.content, author: "admin", createdAt: new Date(Date.now()).toLocaleString() });
+  console.log(req.body);
   const result = await Post.create({
     title: req.body.title,
     content: req.body.content,
-    author: req.session.passport.user
+    author: req.session.passport.user,
+    category: req.body.category
   });
 
   res.json({ authenticated: true });

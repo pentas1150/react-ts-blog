@@ -19,6 +19,9 @@ function App() {
               <Route exact path="/">
                 <PostList />
               </Route>
+              <Route path="/category/:name">
+                <PostList />
+              </Route>
               <Route path="/login">
                 <LoginForm />
               </Route>

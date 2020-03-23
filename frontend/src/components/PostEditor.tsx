@@ -10,6 +10,8 @@ import "./PostEditor.css";
 
 function PostEditor() {
   const isLogin = useSelector((state: RootState) => state.LoginInfo.authenticated);
+  const [categorylist, setCategorylist] = useState([{ name: "" }]);
+  const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const history = useHistory();
@@ -19,12 +21,23 @@ function PostEditor() {
       alert("로그인 필요");
       history.push("/login");
     }
+    const getCategorylist = async () => {
+      const result = await axios.get(`http://${process.env.REACT_APP_DOMAIN}/category`);
+
+      setCategorylist(result.data.category);
+      //setCategory(result.data.category[0].name);
+    };
+
+    getCategorylist();
   }, []);
 
+  const onCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
+  };
   const onBtnClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
-    const result = await axios.post(`http://${process.env.REACT_APP_DOMAIN}/upload`, { title: title, content: content });
+    console.log(category);
+    const result = await axios.post(`http://${process.env.REACT_APP_DOMAIN}/upload`, { category: category, title: title, content: content });
 
     if (!result.data.authenticated) {
       alert("로그인 필요");
@@ -43,13 +56,10 @@ function PostEditor() {
       <h5>Category</h5>
       <Form>
         <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>Example select</Form.Label>
-          <Form.Control as="select">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <Form.Control as="select" onChange={onCategoryChange}>
+            {categorylist.map((item: { name: string }) => {
+              return <option key={item.name}>{item.name}</option>;
+            })}
           </Form.Control>
         </Form.Group>
       </Form>
