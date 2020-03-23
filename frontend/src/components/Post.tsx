@@ -6,6 +6,7 @@ import { Card, Form, Button } from "react-bootstrap";
 import { removeInfo } from "../modules/LoginInfo";
 import renderHTML from "react-render-html";
 import Comment from "./Comment";
+import "dotenv/config";
 
 function Post() {
   const [post, setPost] = useState({ id: 0, title: "", content: "", author: "", createdAt: "" });
@@ -17,45 +18,54 @@ function Post() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const getPost = async () => {
+    const result = await axios.get(`http://${process.env.DOMAIN}/post/${postId}`);
+    if (!result.data.authenticated) {
+      dispatch(removeInfo());
+
+      alert(result.data.msg);
+      return history.push("/login");
+    } else {
+      setPost(result.data.post);
+    }
+  };
+
+  const getComment = async () => {
+    const result = await axios.get(`http://${process.env.DOMAIN}/comment/${postId}`);
+    if (!result.data.authenticated) {
+      dispatch(removeInfo());
+
+      alert(result.data.msg);
+      return history.push("/login");
+    } else {
+      setCommentList(result.data.comment);
+    }
+  };
+
   const onChangeComment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
   const onChangeCommentAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentAuthor(e.target.value);
   };
-  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    alert(`${commentAuthor}: ${comment}`);
+    const result = await axios.post(`http://${process.env.DOMAIN}/comment/${postId}`, { comment: comment, commenter: commentAuthor });
+    if (!result.data.authenticated) {
+      dispatch(removeInfo());
 
-    setCommentAuthor("");
-    setComment("");
+      alert(result.data.msg);
+      return history.push("/login");
+    } else {
+      setCommentAuthor("");
+      setComment("");
+
+      getComment();
+    }
   };
 
   useEffect(() => {
-    const getPost = async () => {
-      const result = await axios.get(`http://192.168.0.10:8080/post/${postId}`);
-      if (!result.data.authenticated) {
-        dispatch(removeInfo());
-
-        alert(result.data.msg);
-        return history.push("/login");
-      } else {
-        setPost(result.data.post);
-      }
-    };
-    const getComment = async () => {
-      const result = await axios.get(`http://192.168.0.10:8080/comment/${postId}`);
-      if (!result.data.authenticated) {
-        dispatch(removeInfo());
-
-        alert(result.data.msg);
-        return history.push("/login");
-      } else {
-        setCommentList(result.data.comment);
-      }
-    };
-
     getPost();
     getComment();
   }, []);

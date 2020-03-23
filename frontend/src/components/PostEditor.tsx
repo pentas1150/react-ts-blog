@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules/index";
 import { useHistory } from "react-router-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import axios from "axios";
 import "./PostEditor.css";
+import "dotenv/config";
 
 function PostEditor() {
+  const isLogin = useSelector((state: RootState) => state.LoginInfo.authenticated);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const history = useHistory();
 
+  useEffect(() => {
+    if (!isLogin) {
+      alert("로그인 필요");
+      history.push("/login");
+    }
+  }, []);
+
   const onBtnClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    const result = await axios.post("http://192.168.0.10:8080/upload", { title: title, content: content });
+    const result = await axios.post(`http://${process.env.DOMAIN}/upload`, { title: title, content: content });
 
     if (!result.data.authenticated) {
       alert("로그인 필요");

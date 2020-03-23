@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 import { removeInfo } from "../modules/LoginInfo";
+import "dotenv/config";
 
 interface post {
   id: number;
@@ -23,7 +24,7 @@ function PostList() {
   useEffect(() => {
     const getPosts = async () => {
       console.log(session);
-      const result = await axios.get("http://192.168.0.10:8080/");
+      const result = await axios.get(`http://${process.env.DOMAIN}/`);
       if (!result.data.authenticated) {
         dispatch(removeInfo());
 
