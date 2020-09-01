@@ -11,7 +11,7 @@ typescript를 이용한 풀스택 블로그 개발기입니다.
 
 ### BackEnd
 - [Express](https://expressjs.com/): 웹 프레임워크
-- [Sequelize](https://sequelize.org/): ORM(Object Relational Mapping) 패키지
+- [Sequelize](https://sequelize.org/): ORM(Object Relational Mapper) 패키지 Mysql 튜플을 Object로 변환시켜줌
 - [Passport](https://www.npmjs.com/package/passport): 회원가입 패키지 (Passport-kakao)
 - [CORS](https://www.npmjs.com/package/cors): CORS 문제 해결 패키지
 
