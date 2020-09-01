@@ -1,6 +1,20 @@
 # Introduction
 typescript를 이용한 풀스택 블로그 개발기입니다.
 
+# Using Tools
+### Common
+- [Typescript](https://www.typescriptlang.org/)
+
+### FrontEnd
+- [React-Hook](https://ko.reactjs.org/docs/hooks-intro.html)
+- [React-Bootstrap](https://react-bootstrap.github.io/)
+
+### BackEnd
+- [Express](https://expressjs.com/): 웹 프레임워크
+- [Sequelize](https://sequelize.org/): ORM(Object Relational Mapping) 패키지
+- [Passport](https://www.npmjs.com/package/passport): 회원가입 패키지 (Passport-kakao)
+- [CORS](https://www.npmjs.com/package/cors): CORS 문제 해결 패키지
+
 # Results
 ### FrontEnd
 1. Hooks를 사용하여 함수 컴포넌트들 구현.
