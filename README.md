@@ -33,3 +33,6 @@ typescript를 이용한 풀스택 블로그 개발기입니다.
 2. React의 axios에 express-session 정보가 저장이 안되는 문제 발생 -> axios의 withCredectials을 허용하여 해결
 
 3. CKEditor 기능 학습 중
+
+4. index.d.ts 문제
+  - https://www.slideshare.net/gloridea/dts-74589285
