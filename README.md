@@ -1,4 +1,5 @@
 # Full Stack Blog with Typescript
+Project URL: https://github.com/pentas1150/react-ts-blog
 
 # Introduction
 typescript를 이용한 풀스택 블로그 개발기입니다.
@@ -51,5 +52,3 @@ typescript를 이용한 풀스택 블로그 개발기입니다.
 
 4. index.d.ts 문제
   - https://www.slideshare.net/gloridea/dts-74589285
-  
-Project URL: https://github.com/pentas1150/react-ts-blog
