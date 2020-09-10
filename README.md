@@ -43,6 +43,18 @@ typescript를 이용한 풀스택 블로그 개발기입니다.
 
 2. Mysql & Sequelize로 각종 정보 저장.
 
+# How to Use
+### FrontEnd
+- .env.development 파일 생성 후 아래의 변수명 기입
+  - REACT_APP_DOMAIN : 백엔드 서버의 주소 ex)localhost:8127
+  
+### BackEnd
+- .env 파일 생성 후 아래의 변수명 기입
+  - SECRET_KEY : 쿠키의 시크릿 키
+  - DB_ID : MySQL의 루트 아이디
+  - DB_PW : MySQL 루트 아이디의 비밀번호
+  - DB_NAME : 해당 프로젝트와 연결할 DB의 이름
+
 # Troubleshooting
 1. CORS문제 발생 -> BackEnd에 cors 미들웨어 추가하여 해결
 
